@@ -7,6 +7,7 @@ from flask import Flask, request, render_template, redirect, jsonify, abort
 from flask.ext.redis import FlaskRedis
 
 app = Flask(__name__)
+app.debug = True # Debug
 app.APP_PATH = os.path.dirname(os.path.realpath(__file__))
 app.WORDS_PATH = os.path.join(app.APP_PATH, 'words.txt')
 app.REDIS_URL = "redis://localhost:6379/0"  # redis://:password@localhost:6379/0
@@ -49,4 +50,4 @@ def main():
 
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run()
