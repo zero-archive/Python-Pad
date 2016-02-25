@@ -3,17 +3,27 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>{{ padname }} / Pad</title>
-  <link href="/static/normalize.css" rel="stylesheet" />
-  <link href="/static/styles.css" rel="stylesheet" />
+  <title>{{ padname }} — Pad</title>
+  <link href="/static/favicon.gif" rel="shortcut icon" type="image/gif" />
+  <link href="/static/css/normalize.css" rel="stylesheet" media="screen" />
+  <link href="/static/css/application.css" rel="stylesheet" media="screen" />
+  <link href="/static/css/print.css" rel="stylesheet" media="print" />
 </head>
 <body>
-  <div class="container">
-    <textarea class="content" spellcheck="true">{{ content }}</textarea>
+  <div class="stack">
+    <div class="layer_1">
+      <div class="layer_2">
+        <div class="layer_3">
+          <textarea name="contents" id="contents" class="contents" spellcheck="true">{{ content }}</textarea>
+        </div>
+      </div>
+    </div>
   </div>
-  <pre class="print"></pre>
-  <script src="http://code.jquery.com/jquery.min.js"></script>
-  <script src="/static/jquery.textarea.js"></script>
-  <script src="/static/script.js"></script>
+  <div id="printable_contents" class="contents"></div>
+  <div id="loading"></div>
+
+  <script src="https://code.jquery.com/jquery.min.js"></script>
+  <script src="/static/js/jquery.textarea.js"></script>
+  <script src="/static/js/application.js"></script>
 </body>
 </html>
