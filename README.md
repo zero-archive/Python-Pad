@@ -13,7 +13,7 @@ python app.py
 
 ## Configuration
 
-Your configuration should be declared within `app.py` config.
+Configuration should be declared within `app.py` file.
 
 You can declare via a Redis URL containing the database.
 
@@ -21,8 +21,8 @@ You can declare via a Redis URL containing the database.
 app.REDIS_URL = "redis://:password@localhost:6379/0"
 ```
 
-To turn off debug mode&
+To turn off debug mode
 
 ```python
-app.debug = Falseg
+app.run(debug=False)
 ```
