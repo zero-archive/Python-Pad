@@ -24,5 +24,5 @@ app.REDIS_URL = "redis://:password@localhost:6379/0"
 To turn off debug mode&
 
 ```python
-app.debug = False
+app.debug = Falseg
 ```
