@@ -18,7 +18,7 @@ Configuration should be declared within `app.py` file.
 You can declare via a Redis URL containing the database.
 
 ```python
-app.REDIS_URL = "redis://:password@localhost:6379/0"
+app.config['REDIS_URL'] = "redis://:password@localhost:6379/0"
 ```
 
 To turn off debug mode

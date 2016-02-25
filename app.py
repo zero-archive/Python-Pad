@@ -8,9 +8,9 @@ from flask.ext.redis import FlaskRedis
 from werkzeug.routing import BaseConverter
 
 app = Flask(__name__)
-app.APP_PATH = os.path.dirname(os.path.realpath(__file__))
-app.WORDS_PATH = os.path.join(app.APP_PATH, 'words.txt')
-app.REDIS_URL = "redis://localhost:6379/0"  # redis://:password@localhost:6379/0
+app.config['APP_PATH'] = os.path.dirname(os.path.realpath(__file__))
+app.config['WORDS_PATH'] = os.path.join(app.config['APP_PATH'], 'words.txt')
+app.config['REDIS_URL'] = "redis://glocalhost:6379/1"  # redis://:password@localhost:6379/0
 
 redis_store = FlaskRedis(app)
 
@@ -49,7 +49,7 @@ def set(padname):
 
 @app.route('/')
 def main():
-    words = open(app.WORDS_PATH, 'r').read().splitlines()
+    words = open(app.config['WORDS_PATH'], 'r').read().splitlines()
     word = words.pop(random.randrange(len(words)))
 
     while redis_store.exists(padkey(word)):
