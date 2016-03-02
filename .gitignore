@@ -65,4 +65,5 @@ target/
 #Ipython Notebook
 .ipynb_checkpoints
 
+uwsgi/
 wsgi.py
