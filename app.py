@@ -3,15 +3,15 @@
 
 import os
 import random
-from flask import Flask, request, render_template, redirect, jsonify, abort
+from flask import Flask, g, request, render_template, redirect, jsonify, abort
 from flask.ext.redis import FlaskRedis
 from werkzeug.routing import BaseConverter
 
 app = Flask(__name__)
-app.config['APP_PATH'] = os.path.dirname(os.path.realpath(__file__))
-app.config['WORDS_PATH'] = os.path.join(app.config['APP_PATH'], 'words.txt')
-app.config['REDIS_URL'] = "redis://:password@localhost:6379/0"
-
+app.config.update(dict(
+    WORDS_PATH = os.path.join(app.root_path, 'words.txt'),
+    REDIS_URL = 'redis://:password@localhost:6379/0',
+))
 
 class RegexConverter(BaseConverter):
     def __init__(self, url_map, *items):
@@ -23,7 +23,16 @@ app.url_map.converters['regex'] = RegexConverter
 
 
 def get_redis():
-    return FlaskRedis(app)
+    if not hasattr(g, 'redis'):
+        if app.testing:
+            rs = FlaskRedis.from_custom_provider(app.config['REDIS_PROVIDER'])
+        else:
+            rs = FlaskRedis()
+
+        rs.init_app(app)
+        g.redis = rs
+
+    return g.redis
 
 
 def padkey(padname, prefix='pad'):
