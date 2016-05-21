@@ -61,7 +61,7 @@ processes = 2
 harakiri = 30
 buffer-size = 32768
 vacuum = true
-	
+
 [prod]
 ini = :uwsgi
 socket = 127.0.0.1:8001
@@ -91,3 +91,7 @@ stdout_capture_maxbytes=1MB
 autostart=true
 autorestart=true
 ```
+
+## License
+
+Licensed under the MIT license: http://www.opensource.org/licenses/mit-license.php
