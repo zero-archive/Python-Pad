@@ -33,6 +33,7 @@ class AppTestCase(unittest.TestCase):
             rs = a.get_redis()
             rs.set('pad:foo', 'bar')
             self.assertEqual(a.pad_get('foo'), 'bar')
+            self.assertEqual(a.pad_get('foobar'), '')
 
     def test_pad_set(self):
         with a.app.app_context():
@@ -42,15 +43,11 @@ class AppTestCase(unittest.TestCase):
             self.assertEqual(rs.get('pad:foo'), 'bar')
             self.assertEqual(rs.get('pad:foobar'), 'foobar')
 
-    def test_main(self):
-        rv = self.app.get('/')
-        self.assertTrue(
-            str(rv.headers['Location']).startswith('http://localhost/')
-        )
-
     def test_get(self):
-        rv = self.app.get('/foo')
-        self.assertGreater(len(rv.data), 0)
+        with a.app.app_context():
+            a.pad_set('foo', '#foobar context#')
+            rv = self.app.get('/foo')
+            self.assertTrue('#foobar context#' in rv.data)
 
     def test_post(self):
         rv = self.app.post('/foo', data=dict(
@@ -59,6 +56,17 @@ class AppTestCase(unittest.TestCase):
         data = self.load_json(rv.data)
         self.assertEqual(data['message'], 'ok')
         self.assertEqual(data['padname'], 'foo')
+
+    def test_post_fail(self):
+        rv = self.app.post('/foo')
+        self.assertEqual(rv.status_code, 400)
+
+    def test_main(self):
+        rv = self.app.get('/')
+        self.assertEqual(rv.status_code, 302)
+
+        rv = self.app.get('/', follow_redirects=True)
+        self.assertEqual(rv.status_code, 200)
 
     @staticmethod
     def load_json(string):
