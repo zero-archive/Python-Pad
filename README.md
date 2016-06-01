@@ -1,6 +1,8 @@
 # Pad
 
-Pad is a notepad.cc clone written in Python
+> Pad is a notepad.cc clone written in Python
+
+![](https://raw.githubusercontent.com/dotzero/Pad/master/pad.png)
 
 ## Installation on dev
 
