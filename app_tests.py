@@ -43,13 +43,13 @@ class AppTestCase(unittest.TestCase):
             self.assertEqual(rs.get('pad:foo'), 'bar')
             self.assertEqual(rs.get('pad:foobar'), 'foobar')
 
-    def test_get(self):
+    def test_route_get(self):
         with a.app.app_context():
             a.pad_set('foo', '#foobar context#')
             rv = self.app.get('/foo')
             self.assertTrue('#foobar context#' in rv.data)
 
-    def test_post(self):
+    def test_route_set(self):
         rv = self.app.post('/foo', data=dict(
             t='foobar'
         ))
@@ -57,11 +57,11 @@ class AppTestCase(unittest.TestCase):
         self.assertEqual(data['message'], 'ok')
         self.assertEqual(data['padname'], 'foo')
 
-    def test_post_fail(self):
+    def test_route_set_fail(self):
         rv = self.app.post('/foo')
         self.assertEqual(rv.status_code, 400)
 
-    def test_main(self):
+    def test_route_main(self):
         rv = self.app.get('/')
         self.assertEqual(rv.status_code, 302)
 

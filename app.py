@@ -68,7 +68,7 @@ def pad_set(padname, content):
 
 
 @app.route('/<regex("\w+"):padname>', methods=['GET'])
-def get(padname):
+def route_get(padname):
     content = pad_get(padname)
 
     return render_template('main.html', padname=padname,
@@ -76,7 +76,7 @@ def get(padname):
 
 
 @app.route('/<regex("\w+"):padname>', methods=['POST'])
-def set(padname):
+def route_set(padname):
     content = request.form['t']
     if not content:
         abort(401)
@@ -87,7 +87,7 @@ def set(padname):
 
 
 @app.route('/')
-def main():
+def route_main():
     words = open(app.config['WORDS_PATH'], 'r').read().splitlines()
     word = words.pop(random.randrange(len(words)))
 
